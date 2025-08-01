@@ -7,20 +7,15 @@ interface SearchBookCardProps {
   book: Book;
   isInReadingList: boolean;
   onAddToReadingList: (book: Book) => void;
-  onBookClick?: (book: Book) => void;
 }
 
 export const SearchBookCard = memo(
-  ({ book, isInReadingList, onAddToReadingList, onBookClick }: SearchBookCardProps) => {
+  ({ book, isInReadingList, onAddToReadingList }: SearchBookCardProps) => {
     const handleAddToList = useCallback(() => {
       if (!isInReadingList) {
         onAddToReadingList(book);
       }
     }, [book, isInReadingList, onAddToReadingList]);
-
-    const handleBookClick = useCallback(() => {
-      onBookClick?.(book);
-    }, [book, onBookClick]);
 
     const actionButton = (
       <Button
@@ -33,7 +28,7 @@ export const SearchBookCard = memo(
       </Button>
     );
 
-    return <BookCard book={book} actionButton={actionButton} onClick={handleBookClick} />;
+    return <BookCard book={book} actionButton={actionButton} />;
   }
 );
 

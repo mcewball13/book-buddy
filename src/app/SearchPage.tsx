@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BookSearch } from "../sections/search/BookSearch";
@@ -27,30 +27,44 @@ export const SearchPage = () => {
     mode: "onChange",
   });
 
-  const onSubmit = (data: SearchFormData) => {
+  const onSubmit = useCallback((data: SearchFormData) => {
     setSearchQuery(data.query);
 
     // reset to first page when searching
     setPagination((prev) => ({ ...prev, page: 1 }));
-  };
+  }, []);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number) => {
     setPagination((prev) => ({ ...prev, page }));
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  }, []);
+
+  const searchProps = useMemo(
+    () => ({
+      books: searchResponse?.docs,
+      totalItems: searchResponse?.numFound || 0,
+      currentPage: pagination.page,
+      itemsPerPage: pagination.limit,
+      isLoading,
+      error,
+      onSubmit,
+      onPageChange: handlePageChange,
+    }),
+    [
+      searchResponse?.docs,
+      searchResponse?.numFound,
+      pagination.page,
+      pagination.limit,
+      isLoading,
+      error,
+      onSubmit,
+      handlePageChange,
+    ]
+  );
 
   return (
     <FormProvider {...methods}>
-      <BookSearch
-        books={searchResponse?.docs}
-        totalItems={searchResponse?.numFound || 0}
-        currentPage={pagination.page}
-        itemsPerPage={pagination.limit}
-        isLoading={isLoading}
-        error={error}
-        onSubmit={onSubmit}
-        onPageChange={handlePageChange}
-      />
+      <BookSearch {...searchProps} />
     </FormProvider>
   );
 };

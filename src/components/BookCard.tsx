@@ -4,17 +4,11 @@ import type { Book } from "../types/book";
 interface BookCardProps {
   book: Book;
   actionButton: React.ReactNode;
-  onClick?: () => void;
 }
 
-export const BookCard = memo(({ book, actionButton, onClick }: BookCardProps) => {
+export const BookCard = memo(({ book, actionButton }: BookCardProps) => {
   return (
-    <div 
-      className={`rounded-lg border border-gray-200 p-4 shadow-sm transition-shadow hover:shadow-md ${
-        onClick ? 'cursor-pointer hover:border-blue-300' : ''
-      }`}
-      onClick={onClick}
-    >
+    <div className="rounded-lg border border-gray-200 p-4 shadow-sm transition-shadow hover:shadow-md">
       {book.cover_i ? (
         <img
           src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
@@ -58,9 +52,7 @@ export const BookCard = memo(({ book, actionButton, onClick }: BookCardProps) =>
           {book.subject.length > 3 && "..."}
         </p>
       )}
-      <div onClick={(e) => e.stopPropagation()}>
-        {actionButton}
-      </div>
+      {actionButton}
     </div>
   );
 });
