@@ -6,8 +6,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SearchContainer } from "./app/SearchView";
-import { ReadingListContainer } from "./app/ReadingListView";
+import { SearchView } from "./app/SearchView";
+import { ReadingListView } from "./app/ReadingListView";
 import { Navigation } from "./components/Navigation";
 import "./App.css";
 
@@ -22,8 +22,8 @@ function AppContent() {
       {showNavigation && <Navigation />}
       <main>
         <Routes>
-          <Route path="/search" element={<SearchContainer />} />
-          <Route path="/reading-list" element={<ReadingListContainer />} />
+          <Route path="/search" element={<SearchView />} />
+          <Route path="/reading-list" element={<ReadingListView />} />
           <Route
             path="/"
             element={

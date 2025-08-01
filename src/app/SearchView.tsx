@@ -6,7 +6,7 @@ import { useBooks } from "../hooks/useBooks";
 import { searchFormSchema, type SearchFormData } from "../types/search-form";
 import type { PaginationParams } from "../types/book";
 
-export const SearchContainer = () => {
+export const SearchView = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [pagination, setPagination] = useState<PaginationParams>({
     page: 1,
