@@ -1,9 +1,15 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { TextField } from "../TextField";
 
-const TestWrapper = ({ children }: { children: React.ReactNode }) => {
-  const methods = useForm();
+const TestWrapper = ({
+  children,
+  defaultValues = {},
+}: {
+  children: React.ReactNode;
+  defaultValues?: Record<string, any>;
+}) => {
+  const methods = useForm({ defaultValues });
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
@@ -16,10 +22,10 @@ describe("TextField component", () => {
     );
 
     const input = screen.getByPlaceholderText("Enter text here");
-    expect(input).toBeInTheDocument();
+    expect(input).toBeTruthy();
   });
 
-  it("accepts user input", () => {
+  it("accepts user input", async () => {
     render(
       <TestWrapper>
         <TextField name="test" />
@@ -29,7 +35,9 @@ describe("TextField component", () => {
     const input = screen.getByRole("textbox") as HTMLInputElement;
     fireEvent.change(input, { target: { value: "test value" } });
 
-    expect(input.value).toBe("test value");
+    await waitFor(() => {
+      expect(input.value).toBe("test value");
+    });
   });
 
   it("renders with different input types", () => {
@@ -39,7 +47,8 @@ describe("TextField component", () => {
       </TestWrapper>
     );
 
-    expect(screen.getByRole("textbox")).toHaveAttribute("type", "email");
+    const emailInput = screen.getByRole("textbox") as HTMLInputElement;
+    expect(emailInput.type).toBe("email");
 
     rerender(
       <TestWrapper>
@@ -47,7 +56,8 @@ describe("TextField component", () => {
       </TestWrapper>
     );
 
-    expect(screen.getByDisplayValue("")).toHaveAttribute("type", "password");
+    const passwordInput = screen.getByDisplayValue("") as HTMLInputElement;
+    expect(passwordInput.type).toBe("password");
   });
 
   it("renders input with correct attributes", () => {
@@ -57,9 +67,9 @@ describe("TextField component", () => {
       </TestWrapper>
     );
 
-    const input = screen.getByRole("textbox");
-    expect(input).toHaveAttribute("id", "test");
-    expect(input).toHaveAttribute("placeholder", "Test input");
-    expect(input).toHaveAttribute("type", "text");
+    const input = screen.getByRole("textbox") as HTMLInputElement;
+    expect(input.id).toBe("test");
+    expect(input.placeholder).toBe("Test input");
+    expect(input.type).toBe("text");
   });
 });

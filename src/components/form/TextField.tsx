@@ -1,4 +1,5 @@
 import { useFormContext } from "react-hook-form";
+import { useCallback } from "react";
 
 interface TextFieldProps {
   name: string;
@@ -13,12 +14,21 @@ export const TextField = ({
   type = "text",
 }: TextFieldProps) => {
   const {
-    register,
+    watch,
+    setValue,
     formState: { errors },
   } = useFormContext();
 
+  const value = watch(name) || "";
   const fieldError = errors[name];
   const hasError = !!fieldError;
+
+  const handleChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setValue(name, event.target.value, { shouldValidate: true });
+    },
+    [name, setValue]
+  );
 
   const containerStyles = "flex flex-col gap-1";
 
@@ -35,9 +45,11 @@ export const TextField = ({
   return (
     <div className={containerStyles}>
       <input
-        {...register(name)}
         type={type}
         id={name}
+        name={name}
+        value={value}
+        onChange={handleChange}
         placeholder={placeholder}
         className={`${baseInputStyles} ${
           inputVariants[hasError ? "error" : "default"]
