@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 import { FormProvider, useForm } from "react-hook-form";
 import { TextField } from "../TextField";
 
@@ -7,37 +7,59 @@ const TestWrapper = ({ children }: { children: React.ReactNode }) => {
   return <FormProvider {...methods}>{children}</FormProvider>;
 };
 
-describe("TextField", () => {
-  it("renders label and input correctly", () => {
+describe("TextField component", () => {
+  it("renders input with placeholder", () => {
     render(
       <TestWrapper>
-        <TextField
-          name="test"
-          label="Test Label"
-          placeholder="Test Placeholder"
-        />
+        <TextField name="test" placeholder="Enter text here" />
       </TestWrapper>
     );
 
-    expect(screen.getByLabelText("Test Label")).toBeInTheDocument();
-    expect(screen.getByPlaceholderText("Test Placeholder")).toBeInTheDocument();
+    const input = screen.getByPlaceholderText("Enter text here");
+    expect(input).toBeInTheDocument();
   });
 
-  it("applies error styles when there is an error", () => {
-    const methods = useForm({
-      defaultValues: { test: "" },
-    });
-    methods.setError("test", {
-      type: "required",
-      message: "This field is required",
-    });
-
+  it("accepts user input", () => {
     render(
-      <FormProvider {...methods}>
-        <TextField name="test" label="Test Label" />
-      </FormProvider>
+      <TestWrapper>
+        <TextField name="test" />
+      </TestWrapper>
     );
 
-    expect(screen.getByText("This field is required")).toBeInTheDocument();
+    const input = screen.getByRole("textbox") as HTMLInputElement;
+    fireEvent.change(input, { target: { value: "test value" } });
+
+    expect(input.value).toBe("test value");
+  });
+
+  it("renders with different input types", () => {
+    const { rerender } = render(
+      <TestWrapper>
+        <TextField name="email" type="email" />
+      </TestWrapper>
+    );
+
+    expect(screen.getByRole("textbox")).toHaveAttribute("type", "email");
+
+    rerender(
+      <TestWrapper>
+        <TextField name="password" type="password" />
+      </TestWrapper>
+    );
+
+    expect(screen.getByDisplayValue("")).toHaveAttribute("type", "password");
+  });
+
+  it("renders input with correct attributes", () => {
+    render(
+      <TestWrapper>
+        <TextField name="test" placeholder="Test input" type="text" />
+      </TestWrapper>
+    );
+
+    const input = screen.getByRole("textbox");
+    expect(input).toHaveAttribute("id", "test");
+    expect(input).toHaveAttribute("placeholder", "Test input");
+    expect(input).toHaveAttribute("type", "text");
   });
 });

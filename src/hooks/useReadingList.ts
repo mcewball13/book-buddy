@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
-import { Book } from "../types/book";
+import type { Book } from "../types/book";
 
-const STORAGE_KEY = "bookbuddy_reading_list";
+import { useState, useEffect } from "react";
+
+import { STORAGE_KEY } from "../config";
 
 export const useReadingList = () => {
   const [readingList, setReadingList] = useState<Book[]>(() => {

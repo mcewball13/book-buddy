@@ -1,11 +1,18 @@
+import type { SearchResponse, PaginationParams } from "../types/book";
+
 import { useQuery } from "@tanstack/react-query";
-import { Book } from "../types/book";
 
-const searchBooks = async (query: string): Promise<Book[]> => {
-  if (!query) return [];
+const searchBooks = async (
+  query: string,
+  pagination: PaginationParams
+): Promise<SearchResponse> => {
+  if (!query) return { docs: [], numFound: 0, start: 0, numFoundExact: true };
 
+  const offset = (pagination.page - 1) * pagination.limit;
   const response = await fetch(
-    `https://openlibrary.org/search.json?q=${encodeURIComponent(query)}`
+    `https://openlibrary.org/search.json?q=${encodeURIComponent(
+      query
+    )}&offset=${offset}&limit=${pagination.limit}`
   );
 
   if (!response.ok) {
@@ -13,13 +20,13 @@ const searchBooks = async (query: string): Promise<Book[]> => {
   }
 
   const data = await response.json();
-  return data.docs;
+  return data;
 };
 
-export const useBooks = (query: string) => {
+export const useBooks = (query: string, pagination: PaginationParams) => {
   return useQuery({
-    queryKey: ["books", query],
-    queryFn: () => searchBooks(query),
+    queryKey: ["books", query, pagination.page, pagination.limit],
+    queryFn: () => searchBooks(query, pagination),
     enabled: !!query,
   });
 };

@@ -1,3 +1,5 @@
+import React from "react";
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
   isLoading?: boolean;
@@ -8,21 +10,25 @@ export const Button = ({
   variant = "primary",
   isLoading,
   className,
+  disabled,
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "rounded-md px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
+    "rounded-md px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:enabled:ring-2 focus:enabled:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50";
 
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500",
+    primary:
+      "bg-blue-600 text-white focus:enabled:ring-blue-500",
     secondary:
-      "bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500",
+      "bg-gray-200 text-gray-900 focus:enabled:ring-gray-500",
   };
+
+  const isDisabled = disabled || isLoading;
 
   return (
     <button
       className={`${baseStyles} ${variants[variant]} ${className}`}
-      disabled={isLoading}
+      disabled={isDisabled}
       {...props}
     >
       {isLoading ? (

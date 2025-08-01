@@ -6,3 +6,15 @@ export interface Book {
   first_publish_year?: number;
   subject?: string[];
 }
+
+export interface SearchResponse {
+  docs: Book[];
+  numFound: number;
+  start: number;
+  numFoundExact: boolean;
+}
+
+export interface PaginationParams {
+  page: number;
+  limit: number;
+}

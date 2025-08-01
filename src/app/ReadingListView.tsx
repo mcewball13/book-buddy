@@ -1,5 +1,5 @@
 import { useReadingList } from "../hooks/useReadingList";
-import { ReadingListPresenter } from "../presenters/ReadingListPresenter";
+import { ReadingListPresenter } from "../sections/reading-list/ReadingList";
 
 export const ReadingListContainer = () => {
   const { readingList, removeFromReadingList } = useReadingList();
