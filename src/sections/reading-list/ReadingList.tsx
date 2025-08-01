@@ -1,5 +1,7 @@
 import { memo } from "react";
 import { ReadingListBookCard } from "../../components/ReadingListBookCard";
+import { BookDetailsModal } from "../../components/BookDetailsModal";
+import { useModal } from "../../hooks/useModal";
 import type { Book } from "../../types/book";
 
 interface ReadingListProps {
@@ -8,6 +10,8 @@ interface ReadingListProps {
 }
 
 export const ReadingList = memo(({ books, onRemoveBook }: ReadingListProps) => {
+  const { selectedBook, isModalOpen, openModal, closeModal } = useModal();
+
   return (
     <div className="container mx-auto px-4 py-8">
       {books.length === 0 ? (
@@ -22,10 +26,17 @@ export const ReadingList = memo(({ books, onRemoveBook }: ReadingListProps) => {
               key={book.key}
               book={book}
               onRemoveFromReadingList={onRemoveBook}
+              onBookClick={openModal}
             />
           ))}
         </div>
       )}
+      
+      <BookDetailsModal
+        book={selectedBook}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 });

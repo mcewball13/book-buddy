@@ -5,6 +5,8 @@ import { Button } from "../../components/form/Button";
 import { Pagination } from "../../components/Pagination";
 import { BookGridSkeleton } from "../../components/BookCardSkeleton";
 import { SearchBookCard } from "../../components/SearchBookCard";
+import { BookDetailsModal } from "../../components/BookDetailsModal";
+import { useModal } from "../../hooks/useModal";
 import type { Book } from "../../types/book";
 import { useReadingList } from "../../hooks/useReadingList";
 import type { SearchFormData } from "../../types/search-form";
@@ -36,6 +38,7 @@ export const BookSearch = memo(
       formState: { isValid },
     } = useFormContext<SearchFormData>();
     const { addToReadingList, isInReadingList } = useReadingList();
+    const { selectedBook, isModalOpen, openModal, closeModal } = useModal();
 
     return (
       <div className="container py-8">
@@ -76,6 +79,7 @@ export const BookSearch = memo(
                   book={book}
                   isInReadingList={isInReadingList(book.key)}
                   onAddToReadingList={addToReadingList}
+                  onBookClick={openModal}
                 />
               ))}
             </div>
@@ -94,6 +98,12 @@ export const BookSearch = memo(
               : "Search for books by title or author."}
           </p>
         )}
+        
+        <BookDetailsModal
+          book={selectedBook}
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        />
       </div>
     );
   }

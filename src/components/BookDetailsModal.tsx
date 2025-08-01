@@ -145,6 +145,10 @@ export const BookDetailsModal = memo(({ book, isOpen, onClose }: BookDetailsModa
     </div>
   );
 
+  if (typeof document === 'undefined') {
+    return null;
+  }
+  
   return createPortal(modalContent, document.body);
 });
 

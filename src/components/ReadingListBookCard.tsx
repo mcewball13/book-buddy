@@ -6,13 +6,18 @@ import type { Book } from "../types/book";
 interface ReadingListBookCardProps {
   book: Book;
   onRemoveFromReadingList: (bookKey: string) => void;
+  onBookClick?: (book: Book) => void;
 }
 
 export const ReadingListBookCard = memo(
-  ({ book, onRemoveFromReadingList }: ReadingListBookCardProps) => {
+  ({ book, onRemoveFromReadingList, onBookClick }: ReadingListBookCardProps) => {
     const handleRemoveFromList = useCallback(() => {
       onRemoveFromReadingList(book.key);
     }, [book.key, onRemoveFromReadingList]);
+
+    const handleBookClick = useCallback(() => {
+      onBookClick?.(book);
+    }, [book, onBookClick]);
 
     const actionButton = (
       <Button
@@ -24,7 +29,7 @@ export const ReadingListBookCard = memo(
       </Button>
     );
 
-    return <BookCard book={book} actionButton={actionButton} />;
+    return <BookCard book={book} actionButton={actionButton} onClick={handleBookClick} />;
   }
 );
 
