@@ -1,22 +1,16 @@
 export const BookCardSkeleton = () => {
   return (
     <div className="rounded-lg border border-gray-200 p-4 shadow-sm animate-pulse">
-      {/* Image skeleton */}
       <div className="mb-4 h-48 w-full bg-gray-300 rounded"></div>
 
-      {/* Title skeleton */}
       <div className="mb-2 h-6 bg-gray-300 rounded w-3/4"></div>
 
-      {/* Author skeleton */}
       <div className="mb-4 h-4 bg-gray-300 rounded w-1/2"></div>
 
-      {/* Published year skeleton */}
       <div className="mb-2 h-4 bg-gray-300 rounded w-1/3"></div>
 
-      {/* Subjects skeleton */}
       <div className="mb-4 h-4 bg-gray-300 rounded w-2/3"></div>
 
-      {/* Button skeleton */}
       <div className="h-10 w-full bg-gray-300 rounded"></div>
     </div>
   );
