@@ -1,5 +1,12 @@
+<<<<<<< Updated upstream
 import { Button } from "../../components/form/Button";
 
+=======
+import { memo } from "react";
+import { ReadingListBookCard } from "../../components/ReadingListBookCard";
+import { BookDetailsModal } from "../../components/BookDetailsModal";
+import { useModal } from "../../hooks/useModal";
+>>>>>>> Stashed changes
 import type { Book } from "../../types/book";
 
 interface ReadingListPresenterProps {
@@ -7,10 +14,16 @@ interface ReadingListPresenterProps {
   onRemoveBook: (bookKey: string) => void;
 }
 
+<<<<<<< Updated upstream
 export const ReadingListPresenter = ({
   books,
   onRemoveBook,
 }: ReadingListPresenterProps) => {
+=======
+export const ReadingList = memo(({ books, onRemoveBook }: ReadingListProps) => {
+  const { selectedBook, isModalOpen, openModal, closeModal } = useModal();
+
+>>>>>>> Stashed changes
   return (
     <div className="container mx-auto px-4 py-8">
       {books.length === 0 ? (
@@ -23,6 +36,7 @@ export const ReadingListPresenter = ({
           {books.map((book) => (
             <div
               key={book.key}
+<<<<<<< Updated upstream
               className="rounded-lg border border-gray-200 p-4 shadow-sm"
             >
               {book.cover_i ? (
@@ -79,9 +93,21 @@ export const ReadingListPresenter = ({
                 Remove from List
               </Button>
             </div>
+=======
+              book={book}
+              onRemoveFromReadingList={onRemoveBook}
+              onBookClick={openModal}
+            />
+>>>>>>> Stashed changes
           ))}
         </div>
       )}
+      
+      <BookDetailsModal
+        book={selectedBook}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+      />
     </div>
   );
 };
