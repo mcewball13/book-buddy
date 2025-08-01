@@ -21,12 +21,11 @@ export const Pagination = ({
 
   const getPageNumbers = () => {
     const pages = [];
-    const showPages = 5; // Show 5 page numbers at a time
+    const showPages = 5;
 
     let startPage = Math.max(1, currentPage - Math.floor(showPages / 2));
     let endPage = Math.min(totalPages, startPage + showPages - 1);
 
-    // Adjust if we're near the end
     if (endPage - startPage + 1 < showPages) {
       startPage = Math.max(1, endPage - showPages + 1);
     }
@@ -44,14 +43,11 @@ export const Pagination = ({
 
   return (
     <div className="flex flex-col items-center gap-4 py-6">
-      {/* Results info */}
       <p className="text-sm text-gray-600">
         Showing {startItem} to {endItem} of {totalItems} results
       </p>
 
-      {/* Pagination controls */}
       <div className="flex items-center gap-2">
-        {/* Previous button */}
         <Button
           variant="secondary"
           onClick={() => onPageChange(currentPage - 1)}
@@ -61,7 +57,6 @@ export const Pagination = ({
           Previous
         </Button>
 
-        {/* First page if not visible */}
         {pageNumbers[0] > 1 && (
           <>
             <Button
@@ -75,7 +70,6 @@ export const Pagination = ({
           </>
         )}
 
-        {/* Page numbers */}
         {pageNumbers.map((page) => (
           <Button
             key={page}
@@ -87,7 +81,6 @@ export const Pagination = ({
           </Button>
         ))}
 
-        {/* Last page if not visible */}
         {pageNumbers[pageNumbers.length - 1] < totalPages && (
           <>
             {pageNumbers[pageNumbers.length - 1] < totalPages - 1 && (
@@ -103,7 +96,6 @@ export const Pagination = ({
           </>
         )}
 
-        {/* Next button */}
         <Button
           variant="secondary"
           onClick={() => onPageChange(currentPage + 1)}

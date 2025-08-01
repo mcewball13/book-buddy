@@ -1,5 +1,5 @@
 import { useReadingList } from "../hooks/useReadingList";
-import { ReadingList } from "../sections/reading-list/reading-list";
+import { ReadingList } from "../sections/reading-list/ReadingList";
 
 export const ReadingListPage = () => {
   const { readingList, removeFromReadingList } = useReadingList();

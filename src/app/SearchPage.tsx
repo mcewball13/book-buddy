@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookSearch } from "../sections/search/search";
+import { BookSearch } from "../sections/search/BookSearch";
 import { useBooks } from "../hooks/useBooks";
 import { searchFormSchema, type SearchFormData } from "../types/search-form";
 import type { PaginationParams } from "../types/book";
