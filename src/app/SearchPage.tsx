@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookSearch } from "../sections/search/BookSearch";
+import { BookSearch } from "../sections/search/view/BookSearch";
 import { useBooks } from "../hooks/useBooks";
 import { useSearchState } from "../hooks/useSearchState";
 import { searchFormSchema, type SearchFormData } from "../types/search-form";

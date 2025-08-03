@@ -1,7 +1,7 @@
-import { memo, useCallback } from "react";
-import { BookCard } from "./BookCard";
-import { Button } from "./form/Button";
-import type { Book } from "../types/book";
+  import { memo, useCallback } from "react";
+import { BookCard } from "../../components/BookCard";
+import { Button } from "../../components/form/Button";
+import type { Book } from "../../types/book";
 
 interface SearchBookCardProps {
   book: Book;
