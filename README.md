@@ -47,3 +47,4 @@ npm run test:coverage
 - I would have used a context to store the search state and a custom hook to update the state.
 - I would have used a custom Layout component to handle the navigation.
 - I would have better organized the components.
+- I opened a PR so you can see the diff
