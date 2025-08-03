@@ -10,6 +10,7 @@ A modern React application for discovering and managing your personal reading li
    - npm (comes with Node.js)
 
 2. **Installation**
+
    ```bash
    git clone <your-repo-url>
    cd book-buddy
@@ -38,3 +39,11 @@ npm run test:watch
 # Generate coverage report
 npm run test:coverage
 ```
+
+## Refactor
+
+> I added a `refactor` branch with some updated codeto show how I would have done it if I had more time. I spent about 45 min on Sunday to do it.
+
+- I would have used a context to store the search state and a custom hook to update the state.
+- I would have used a custom Layout component to handle the navigation.
+- I would have better organized the components.
