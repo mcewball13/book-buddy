@@ -6,6 +6,7 @@ import {
   useLocation,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SearchProvider } from "./contexts/SearchContext";
 import { SearchPage } from "./app/SearchPage";
 import { ReadingListPage } from "./app/ReadingListPage";
 import { Navigation } from "./components/Navigation";
@@ -52,11 +53,13 @@ function AppContent() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <div className="min-h-screen bg-gray-50">
-          <AppContent />
-        </div>
-      </Router>
+      <SearchProvider>
+        <Router>
+          <div className="min-h-screen bg-gray-50">
+            <AppContent />
+          </div>
+        </Router>
+      </SearchProvider>
     </QueryClientProvider>
   );
 }

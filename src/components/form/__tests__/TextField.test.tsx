@@ -7,7 +7,7 @@ const TestWrapper = ({
   defaultValues = {},
 }: {
   children: React.ReactNode;
-  defaultValues?: Record<string, any>;
+  defaultValues?: Record<string, unknown>;
 }) => {
   const methods = useForm({ defaultValues });
   return <FormProvider {...methods}>{children}</FormProvider>;
