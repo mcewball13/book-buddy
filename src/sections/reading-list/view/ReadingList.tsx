@@ -1,8 +1,8 @@
 import { memo } from "react";
-import { ReadingListBookCard } from "../../components/ReadingListBookCard";
-import { BookDetailsModal } from "../../components/BookDetailsModal";
-import { useModal } from "../../hooks/useModal";
-import type { Book } from "../../types/book";
+import { ReadingListBookCard } from "../ReadingListBookCard";
+import { BookDetailsModal } from "../../../components/BookDetailsModal";
+import { useModal } from "../../../hooks/useModal";
+import type { Book } from "../../../types/book";
 
 interface ReadingListProps {
   books: Book[];
